@@ -10,12 +10,12 @@
             </div>
 
             <div class="modal-body">
-                <p class="text-warning">{{body}}{{projectname}}</p>
-                <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist" ng-change="change()" required>
+                <p class="text-warning"> {{body}}</p>
+                <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist track by project.NameId" ng-change="change()" required>
                     <option value=""></option>
                 </select>
                 <br/>
-                <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectType] track by task" required>
+                <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectname.Type]" required>
                     <option value=""></option>
                 </select>
                 

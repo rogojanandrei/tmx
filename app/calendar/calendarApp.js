@@ -35,7 +35,20 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 			$scope.endDate = moment(view.end).add(-1,'days');
 
 		//server call get events for a week intrval [start, end] $hhtp.post(start,end,'weekView') 
-		
+			$scope.projectList = [
+				{NameId: 'SD', Name:'SheepDog', Type:'ClientProjects'}, 
+				{NameId: 'ACC', Name:'Access', Type:'ClientProjects'}, 
+				{NameId: 'ARR', Name:'Arrows', Type:'ClientProjects'}, 
+				{NameId: 'EMR', Name:'Emerson', Type:'ClientProjects'},
+				{NameId: 'INTERN', Name:'Internal', Type:'Internal'}, 
+				{NameId: '10%', Name:'10%', Type:'TenPercent'}
+			]; 
+			$scope.taskList = { 
+				TenPercent:['Own Time-Spending'], 
+				ClientProjects:['Development', 'Meetings', 'Non-bilable', 'QA', 'QA NB'], 
+				Internal:['Administrative', 'Evaluations', 'Meetings']
+			};
+
 			$scope.weekEvents =  
 			{
 				totals:[8,8,0,0,0,0,8],
@@ -191,12 +204,14 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 		//get task and data
 		var a = $scope.eachDayEvents[$scope.clickedDate.day()].events[$index];
 		$scope.iseditevent = true;
+		$scope.projectname = getProjectByName(a.Project);
 		$scope.taskname = a.Task;
-		$scope.projectname = a.Project;
 
 		$scope.comments = a.Comments;
 		$scope.hours = a.Hours;
-			//$scope.
+
+
+		//$scope.
 	}
 
 	$scope.deleteRow = function(rowIndex){
@@ -446,6 +461,12 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
  	}	
 
    	//private functions
+   	function getProjectByName(projectName){
+   		var projects = $scope.projectList.filter(function(item){
+					   		return item.Name === projectName;
+					    });
+   		return projects[0];
+   	}
 
    	function setWeekEnventsColumnHours(index, totalHours) {
    		$scope.weekEvents.totals[index] = isNaN(totalHours) ? 0 : totalHours;
@@ -560,26 +581,30 @@ myApp.directive('modal', function () {
 		templateUrl: 'app/calendar/partialModal.html',
 		transclude: true,
 
-		controller: function ($scope) {
+		controller: function ($scope, $http) {
 			$scope.handler = 'pop'; 
-			$scope.projectlist = [{NameId: 'SD', Name:'SheepDog', Type:'ClientProjects'}, 
-			{NameId:'ACC', Name:'Access', Type:'ClientProjects'}, 
-			{NameId:'ARR', Name:'Arrows', Type:'ClientProjects'}, 
-			{NameId:'EMR', Name:'Emerson', Type:'ClientProjects'},
-			{NameId: 'INTERN', Name:'Internal', Type:'Internal'}, 
-			{NameId: '10%', Name:'10%', Type:'TenPercent'}]; 
-			$scope.taskList = { TenPercent:['Own Time-Spending'], 
-			ClientProjects:['Development', 'Meetings', 'Non-bilable', 'QA', 'QA NB'], 
-			Internal:['Administrative', 'Evaluations', 'Meetings']};
+			$scope.projectlist = [
+				{NameId: 'SD', Name:'SheepDog', Type:'ClientProjects'}, 
+				{NameId: 'ACC', Name:'Access', Type:'ClientProjects'}, 
+				{NameId: 'ARR', Name:'Arrows', Type:'ClientProjects'}, 
+				{NameId: 'EMR', Name:'Emerson', Type:'ClientProjects'},
+				{NameId: 'INTERN', Name:'Internal', Type:'Internal'}, 
+				{NameId: '10%', Name:'10%', Type:'TenPercent'}
+			]; 
+			$scope.taskList = { 
+				TenPercent:['Own Time-Spending'], 
+				ClientProjects:['Development', 'Meetings', 'Non-bilable', 'QA', 'QA NB'], 
+				Internal:['Administrative', 'Evaluations', 'Meetings']
+			};
 
 			$scope.projectTypes=['TenPercent','ClientProjects','Internal']
 
-			
+			//TODO: delete	
 			$scope.change = function(){
 				var project = $scope.projectlist.filter(function(proj){
 					return proj.Name === $scope.projectname.Name;
 				});		
-				$scope.projectType = project[0].Type;
+				return $scope.projectType = project[0].Type;
 			}
 
 			$scope.callbackedittaskcomments = function(projectname, taskname, comments, hours){
@@ -606,23 +631,33 @@ myApp.directive('modal', function () {
 				data.taskname = taskname;
 				data.comments = comments;
 								//validate duplicate Project-Task
-								var existingProjectTaskCombination = $scope.weekeventslist.filter(function(item)
-								{
-									return item.Project === projectname.Name && 
-									item.Task === taskname;
-								});
-								if(existingProjectTaskCombination.length == 0)
-								{
-									$scope.$emit('addTaskInWeekView', data);	
-								}
-								else
-								{
-									//show validation errror
-								}
-								
-							}
-
-						},
-					};
+				var existingProjectTaskCombination = $scope.weekeventslist.filter(function(item)
+				{
+					return item.Project === projectname.Name && 
+					item.Task === taskname;
 				});
+				if(projectTaskCombinationExists(projectname.Name, taskname))
+				{
+					$scope.$emit('addTaskInWeekView', data);	
+				}
+				else
+				{
+					//show validation errror
+				}
+								
+			}
+			
+			//check for duplicate Project-Task
+			function projectTaskCombinationExists(projectName, taskName){
+				var existingProjectTaskCombination = $scope.weekEventsList.filter(function(item)
+				{
+					return item.Project === projectName && item.Task === taskName;
+				});
+
+				return existingProjectTaskCombination.length == 0;
+			}
+		},
+	};
+				
+});
 
