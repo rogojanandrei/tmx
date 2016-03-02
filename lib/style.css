@@ -1,0 +1,44 @@
+body {
+        margin: 40px 10px;
+        padding: 20 0 0 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+.vertical-align {
+    display: inline-block;
+    align-items: center;
+}
+
+.borderless .borderless td, .borderless th {
+    border: 0;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.hideCalendarBody  tbody{
+       display: none;
+    
+} 
+
+.isSelectedDate .fc-bg tr:first-child td:first-child {
+   background: #bce8f1;
+   opacity:.3;
+}
+
+.removeSelection .fc-bg tr:first-child td:first-child {
+   background: red; 
+}
+
+.rowHeight .fc-agenda-slots td div {
+     height: 40px !important;
+}

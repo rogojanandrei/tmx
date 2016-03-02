@@ -1,0 +1,48 @@
+
+
+<div id="{{handler}}" class="modal fade" tabindex="-1" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="text-left">{{headerdate}}</h6>
+                <h4 class="modal-title text-left">{{header}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-warning">{{body}}</p>
+                <select name="project" class="form-control" ng-model="projectName" ng-options="project.Name for project in projectlist" ng-change="change()" required>
+                    <option value=""></option>
+                </select>
+                <br/>
+                <select name="task" class="form-control" ng-model="taskName" ng-options="task for task in taskList[projectType]" required>
+                    <option value=""></option>
+                </select>
+                
+                <br/>
+                <div class="form-group">
+                    <div class="required" ng-class="{'has-error': vm.hasError('Notes')}">
+                        <div class="col-md-8">
+                            <textarea type="text" class="form-control input-lg" ng-model="comments" name="Notes" placeholder="Notes" required />
+                            <label ng-if="vm.hasError('Notes','required')" class="control-label">This field is required</label>
+                        </div>
+                    </div>
+                    
+                    <div ng-show="currentviewmodal != 'allProjectsInWeekView'">
+                        <div  class="col-md-4">
+                            <input type="text" class="form-control input-lg" ng-model="hours" name="hours" placeholder = "0.00" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+               <!-- <p class="text-left">{{footer}}</p>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectName, taskName, comments, hours)">Save</button>
+                <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectName, taskName, comments, hours)">Save</button>
+                <!--data-ng-click="callbackbuttonright(); $event.stopPropagation()"-->
+            </div>
+        </div>
+    </div>
+</div>

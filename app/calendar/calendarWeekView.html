@@ -1,0 +1,51 @@
+<!-- WEEK VIEW -->
+<div ng-if="weekEvents.events.length != 0">
+   <div class=" panel panel-default borderless">
+     <div class="table overflow-x-scroll ">
+      <table  class="table table-condensed" st-table="weekEvents.events">
+        <tbody>
+
+          <tr ng-repeat="event in weekEvents.events">
+                            
+                            <td ng-class="{'has-error': hasError('Sun_'+$index,weekViewForm,true)}">
+                              <input type="number" name="{{'Sun_'+$index}}" class="form-control" ng-model="event.Days[0]" min="0" ng-change="sumHours($index,0,event.Days[0])"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Mon_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Mon_'+$index}}" class="form-control" ng-model="event.Days[1]" ng-change="sumHours($index,1,event.Days[1])" min="0"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Tue_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Tue_'+$index}}" class="form-control" ng-model="event.Days[2]" ng-change="sumHours($index,2,event.Days[2])" min="0"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Wed_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Wed_'+$index}}" class="form-control" ng-model="event.Days[3]" ng-change="sumHours($index,3,event.Days[3])" min="0"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Thu_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Thu_'+$index}}" class="col-md-2 form-control" ng-model="event.Days[4]" ng-change="sumHours($index,4,event.Days[4])" min="0"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Fri_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Fri_'+$index}}" class="col-md-2 form-control" ng-model="event.Days[5]" ng-change="sumHours($index,5,event.Days[5])" min="0"></input>
+                            </td>
+                            <td ng-class="{'has-error': hasError('Sat_'+$index, weekViewForm,true)}">
+                              <input type="number" name="{{'Sat_'+$index}}" class="col-md-2 form-control" ng-model="event.Days[6]" ng-change="sumHours($index,6,event.Days[6])" min="0"></input>
+                            </td>       
+
+                          </tr>
+
+                          <tr>
+                        
+                            <td><b>{{weekEvents.totals[0]}}</b></td>
+                            <td><b>{{weekEvents.totals[1]}}</b></td>
+                            <td><b>{{weekEvents.totals[2]}}</b></td>
+                            <td><b>{{weekEvents.totals[3]}}</b></td>
+                            <td><b>{{weekEvents.totals[4]}}</b></td>
+                            <td><b>{{weekEvents.totals[5]}}</b></td>
+                          <td><b>{{weekEvents.totals[6]}}</b></td>
+                         
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              
+    </div>        
