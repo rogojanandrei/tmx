@@ -3,13 +3,14 @@
 var myApp = angular.module('app', ['ui.calendar','ui.bootstrap', 'angularMoment']);
 
 myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig){
-
+		//$scope.isEditEvent = false;
 	$scope.eachDayEvents = [];
 	$scope.totalHoursPerDay = 0;
 	$scope.startDate = null;
 	$scope.endDate = null;
 	$scope.calendarDate = [{events:[]}];
 	$scope.currentViewName;
+	$scope.iseditevent = false;
 	
 	$scope.renderView = function(view) {
 		$scope.toggle = true;
@@ -186,18 +187,30 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 		}
 	}
 
+	$scope.editComments = function($index){
+		//get task and data
+		var a = $scope.eachDayEvents[$scope.clickedDate.day()].events[$index];
+		$scope.iseditevent = true;
+		$scope.taskname = a.Task;
+		$scope.projectname = a.Project;
+
+		$scope.comments = a.Comments;
+		$scope.hours = a.Hours;
+			//$scope.
+	}
+
 	$scope.deleteRow = function(rowIndex){
 
  		 //delete all events from DayView and update Calendar Object
  		 //DeleteAllEvent()
 
- 		 var projectName = $scope.weekEvents.events[rowIndex].Project;
- 		 var taskName = $scope.weekEvents.events[rowIndex].Task;
+ 		 var projectname = $scope.weekEvents.events[rowIndex].Project;
+ 		 var taskname = $scope.weekEvents.events[rowIndex].Task;
  		 for(var i=0;i<7;i++)
  		 {
  		 	var dayInWeekEvent = $scope.eachDayEvents[i].events.filter(function(item)
  		 	{
- 		 		return item.Project === projectName && item.Task === taskName;
+ 		 		return item.Project === projectname && item.Task === taskname;
  		 	});
  		 	if(dayInWeekEvent.length != 0)
  		 	{
@@ -212,8 +225,6 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 
  		$scope.weekEvents.events.splice(rowIndex, 1);
  		RecalculateTotals();
-
- 		 //TODo la revenire la week view afiseaza prima zi din saptamana
  		}
 
 	//on change - recalc totals per project,day,week / Update day Events in dayView / update calendar Object
@@ -228,12 +239,12 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
         		RecalculateTotals();
         		
         		//UpdateDayEvents()
-        		var projectName = $scope.weekEvents.events[rowIndex].Project;
+        		var projectname = $scope.weekEvents.events[rowIndex].Project;
         		var taskName = $scope.weekEvents.events[rowIndex].Task;
         		var projectNameId = $scope.weekEvents.events[rowIndex].ProjectNameId;
         		var dayInWeekEvent = $scope.eachDayEvents[dayInWeek].events.filter(function(item)
         		{
-        			return item.Project === projectName && item.Task === taskName;
+        			return item.Project === projectname && item.Task === taskname;
         		});
         		if(dayInWeekEvent.length != 0) // edit one day event hours
         		{		
@@ -253,8 +264,8 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
         		{
         			// it a new task in a existing project
         			var newProjectEntry = {};
-        			newProjectEntry.Project = projectName;
-        			newProjectEntry.Task = taskName;
+        			newProjectEntry.Project = projectname;
+        			newProjectEntry.Task = taskname;
         			newProjectEntry.ProjectNameId = projectNameId;
         			newProjectEntry.Comments = ''	;
         			newProjectEntry.Hours = value;
@@ -335,11 +346,36 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 	$scope.body = 'Project / Task';
 	$scope.footer = 'Put here your footer';
    
+	//handle comments in day view //TODO: change to edit all events properties in day
+ 	$scope.$on('addCommentsTaskInDayView', function(e, data) {
+ 		
+ 		/*var newProjectEntry = {Project: data.projectname.Name, 
+ 			ProjectNameId: data.projectName.NameId,
+ 			Task: data.taskname, 
+ 			Hours:0,
+ 			Comments: data.comments, 
+ 			Days: [0,0,0,0,0,0,0],
+ 			start: moment( $scope.clickedDate ).format('YYYY-MM-DD'),
+ 		};*/
+
+ 		var task = $scope.eachDayEvents[$scope.clickedDate.day()].events.filter(function(item)
+ 		{
+ 				return item.Project === data.Project && item.Task === data.Task;
+ 		});
+
+ 		if(task.length > 0)
+ 		{	
+ 		    task[0].Comments = data.Comments;
+ 		}
+
+ 		//$scope.weekEvents.events.push(newProjectEntry);
+ 	});
+
     //handle add new task in day view
     $scope.$on('addTaskInDayView', function(e, data) {
-    	var newProjectEntry = {Project: data.projectName.Name, 
-    		ProjectNameId: data.projectName.NameId,
-    		Task: data.taskName, 
+    	var newProjectEntry = {Project: data.projectname.Name, 
+    		ProjectNameId: data.projectname.NameId,
+    		Task: data.taskname, 
     		Comments: data.comments, 
     		Hours: parseFloat(data.hours) === NaN ? 0 : parseFloat(data.hours) , 
     		start: moment( $scope.clickedDate ).format('YYYY-MM-DD'),
@@ -380,14 +416,13 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 					existingProjectTaskCombination[0].Hours+= newProjectEntry.Hours;
 				}
 
-
 			});
 
  	//handle add new task in day view
  	$scope.$on('addTaskInWeekView', function(e, data) {
- 		var newProjectEntry = {Project: data.projectName.Name, 
- 			ProjectNameId: data.projectName.NameId,
- 			Task: data.taskName, 
+ 		var newProjectEntry = {Project: data.projectname.Name, 
+ 			ProjectNameId: data.projectname.NameId,
+ 			Task: data.taskname, 
  			Hours:0,
  			Comments: data.comments, 
  			Days: [0,0,0,0,0,0,0],
@@ -513,10 +548,11 @@ myApp.directive('modal', function () {
 			callbackbuttonright:'&ngClickRightButton', 
 			callbackbuttonrightweek: '&ngSaveTaskWeekView',
 			handler: '=lolo',
-			taskName: '=taskName',
-			projectName: '=projectName', 
-			comments: '=comments',
-			hours: '=hours',
+			taskname: '=modalTaskname',
+			projectname: '=modalProjectname', 
+			comments: '=modalComments',
+			hours: '=modalHours',
+			iseditevent: '=modalIseditevent',
 			currentviewmodal:'=modalCurrentviewmodal',
 			weekeventslist: '=modalWeekeventslist',
 		},
@@ -540,32 +576,40 @@ myApp.directive('modal', function () {
 
 			
 			$scope.change = function(){
-
 				var project = $scope.projectlist.filter(function(proj){
-					return proj.Name === $scope.projectName.Name;
+					return proj.Name === $scope.projectname.Name;
 				});		
 				$scope.projectType = project[0].Type;
 			}
 
-			$scope.callbackbuttonright = function(projectName, taskName, comments, hours){
+			$scope.callbackedittaskcomments = function(projectname, taskname, comments, hours){
 				var data={};
-				data.projectName = projectName;
-				data.taskName = taskName;
+				data.projectname = projectname;
+				data.taskname = taskname;
+				data.comments = comments;
+				data.hours = hours;
+				$scope.$emit('addCommentsTaskInDayView', data);
+			}
+
+			$scope.callbackbuttonright = function(projectname, taskname, comments, hours){
+				var data={};
+				data.projectname = projectname;
+				data.taskname = taskname;
 				data.comments = comments;
 				data.hours = hours;
 				$scope.$emit('addTaskInDayView', data);
 			}
 
-			$scope.callbackbuttonrightweek = function(projectName, taskName, comments, hours){
+			$scope.callbackbuttonrightweek = function(projectname, taskname, comments, hours){
 				var data={};
-				data.projectName = projectName;								
-				data.taskName = taskName;
+				data.projectname = projectname;								
+				data.taskname = taskname;
 				data.comments = comments;
 								//validate duplicate Project-Task
 								var existingProjectTaskCombination = $scope.weekeventslist.filter(function(item)
 								{
-									return item.Project === projectName.Name && 
-									item.Task === taskName;
+									return item.Project === projectname.Name && 
+									item.Task === taskname;
 								});
 								if(existingProjectTaskCombination.length == 0)
 								{

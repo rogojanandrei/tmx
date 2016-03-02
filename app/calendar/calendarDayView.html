@@ -13,7 +13,24 @@
                                   <div class="row"><b>[{{event.ProjectNameId}}] {{event.Project}}</b>  </div>
                                 </div>
                                 <div class="modal-body">
-                                  <div class="row">{{event.Task}} - {{event.Comments}}</div> 
+                                  <div class="row">{{event.Task}} - {{event.Comments}}
+
+                                          <div>
+                                            <!--    <modal lolo="modal5" modal-body="body" modal-footer="footer" modal-header="header" 
+                                              modal-headerdate = "headerdate" 
+                                              modal-projectList = "projectList" 
+                                              modal-projectGroups = "projectGroups" 
+                                              modal-taskList = "taskList"
+                                              modal-taskName= 'taskName'
+                                              modal-projectName= 'projectName' 
+                                              modal-comments='comments'
+                                              modal-hours='hours'
+                                              modal-isEditEvent='isEditEvent'
+                                              data-ng-click-right-button="saveTaskEntry()"></modal> -->
+                                              <a href="#{{modal1}}" role="button" class="btn btn-success pull-right" ng-click="editComments($index)" data-toggle="modal"><i class="fa fa-edit"></i></a> 
+                                          </div>
+                                  </div>
+
                                 </div>
                               </div>
 
@@ -41,10 +58,11 @@
                 modal-projectList = "projectList" 
                 modal-projectGroups = "projectGroups" 
                 modal-taskList = "taskList"
-                modal-taskName= 'taskName'
-                modal-projectName= 'projectName' 
+                modal-taskname= 'taskname'
+                modal-projectname= 'projectname' 
                 modal-comments='comments'
                 modal-hours='hours'
+                modal-iseditevent="iseditevent"
                 data-ng-click-right-button="saveTaskEntry()"></modal>
                 <a href="#{{modal1}}" role="button" class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"><small>  New entry</small></i></a>
         </div>

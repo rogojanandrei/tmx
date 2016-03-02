@@ -10,12 +10,12 @@
             </div>
 
             <div class="modal-body">
-                <p class="text-warning">{{body}}</p>
-                <select name="project" class="form-control" ng-model="projectName" ng-options="project.Name for project in projectlist" ng-change="change()" required>
+                <p class="text-warning">{{body}}{{projectname}}</p>
+                <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist" ng-change="change()" required>
                     <option value=""></option>
                 </select>
                 <br/>
-                <select name="task" class="form-control" ng-model="taskName" ng-options="task for task in taskList[projectType]" required>
+                <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectType] track by task" required>
                     <option value=""></option>
                 </select>
                 
@@ -39,8 +39,9 @@
             <div class="modal-footer">
                <!-- <p class="text-left">{{footer}}</p>-->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectName, taskName, comments, hours)">Save</button>
-                <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectName, taskName, comments, hours)">Save</button>
+                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && iseditevent == false" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectname, taskname, comments, hours)">Save</button>
+                <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectname, taskname, comments, hours)">Save</button>
+                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && iseditevent == true" type="button" class="btn btn-primary" data-ng-click="callbackedittaskcomments(projectname, taskname, comments, hours)">Save</button>
                 <!--data-ng-click="callbackbuttonright(); $event.stopPropagation()"-->
             </div>
         </div>
