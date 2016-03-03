@@ -372,31 +372,9 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 	$scope.body = 'Project / Task';
 	$scope.footer = 'Put here your footer';
    
-	//handle comments in day view //TODO: change to edit all events properties in day
+	//handles edit hours and comments in day view //TODO: change to edit all events properties in day
  	$scope.$on('addCommentsTaskInDayView', function(e, data) {
- 		/*title:8,
-					id:0,
-					events:[
-					{
-						Project: 'SheepDog',
-						ProjectNameId: 'SD',
-						Task: 'Development',
-						Hours: 4,
-						backgroundColor: '#f26522',
-						Comments: 'This task is about programming',
-					},
-					{
-						Project: 'SheepDog',
-						ProjectNameId: 'SD',
-						Task: 'QA',
-						Hours: 4,
-						Comments: 'This task is about testing',
-					}],
-				},
-
-				{
- 		*/
-
+ 		
  		var task = $scope.eachDayEvents[$scope.clickedDate.day()].events.filter(function(item)
  		{
  				return item.Project === data.projectname.Name && item.Task === data.taskname;
@@ -411,20 +389,27 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
  		//update totals in day view
  		var dayEvent = $scope.eachDayEvents[$scope.clickedDate.day()];
  		dayEvent.title = 0;
+
  		for(var i=0;i<dayEvent.events.length;i++)
  		{
  				dayEvent.title+= dayEvent.events[i].Hours;
  			}
+
 	    $scope.totalHoursPerDay = dayEvent.title;
+	    
 	    //update calendar
 	    $scope.calendarDate[0].events[$scope.theDayInWeek].title = dayEvent.title;
 
  		//update hours in week view
-
- 			//find edited proj and day in weeklist and modif hours 
-
-
- 		
+ 	    
+		var project = $scope.weekEvents.events.filter(function(item)
+				{
+					return item.Project === task[0].Project && 
+					item.Task === task[0].Task;
+				});
+		project[0].Days[$scope.clickedDate.day()] = task[0].Hours;
+		project[0].Comments = task[0].Comments;
+		 		
  	});
 
     //handle add new task in day view
