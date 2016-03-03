@@ -1,49 +1,51 @@
 
 
 <div id="{{handler}}" class="modal fade" tabindex="-1" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h6 class="text-left">{{headerdate}}</h6>
-                <h4 class="modal-title text-left">{{header}}</h4>
-            </div>
+    <form name="addEditEntryForm" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h6 class="text-left">{{headerdate}}</h6>
+                    <h4 class="modal-title text-left">{{header}}</h4>
+                </div>
 
-            <div class="modal-body">
-                <p class="text-warning"> {{body}}</p>
-                <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist track by project.NameId" ng-change="change()" ng-disabled="iseditevent" required>
-                    <option value=""></option>
-                </select>
-                <br/>
-                <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectname.Type]" ng-disabled="iseditevent" required>
-                    <option value=""></option>
-                </select>
-                
-                <br/>
-                <div class="form-group">
-                    <div class="required" ng-class="{'has-error': vm.hasError('Notes')}">
-                        <div class="col-md-8">
-                            <textarea type="text" class="form-control input-lg" ng-model="comments" name="Notes" placeholder="Notes" required />
-                            <label ng-if="vm.hasError('Notes','required')" class="control-label">This field is required</label>
+                <div class="modal-body">
+                    <p class="text-warning"> {{body}}</p>
+                    <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist track by project.NameId" ng-disabled="iseditevent" required>
+                        <option value=""></option>
+                    </select>
+                    <br/>
+                    <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectname.Type]" ng-disabled="iseditevent" required>
+                        <option value=""></option>
+                    </select>
+
+                    <br/>
+                    <div class="form-group">
+                        <div class="required" ng-class="{'has-error': hasError('notes', addEditEntryForm, submited)}">
+                            <div class="col-md-8">
+                                <textarea type="text" class="form-control input-lg" ng-model="comments" name="notes" placeholder="Notes" required />
+                                <label ng-if="hasError('notes', addEditEntryForm, submited, 'required')" class="control-label">This field is required</label>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div ng-show="currentviewmodal != 'allProjectsInWeekView'">
-                        <div  class="col-md-4">
-                            <input type="number" class="form-control input-lg" ng-model="hours" name="hours" placeholder = "0.00" />
+
+                        <div ng-show="currentviewmodal != 'allProjectsInWeekView'">
+                            <div  class="col-md-4">
+                                <input type="number" class="form-control input-lg" ng-model="hours" name="hours" placeholder = "0.00" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-               <!-- <p class="text-left">{{footer}}</p>-->
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && !iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectname, taskname, comments, hours)">Save</button>
-                <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectname, taskname, comments, hours)">Save</button>
-                <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackedittaskcomments(projectname, taskname, comments, hours)">Save</button>
-                <!--data-ng-click="callbackbuttonright(); $event.stopPropagation()"-->
-            </div>
-        </div>
-    </div>
+                <div class="modal-footer">
+                 <!-- <p class="text-left">{{footer}}</p>-->
+                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                 <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && !iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectname, taskname, comments, hours)">Save</button>
+                 <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectname, taskname, comments, hours)">Save</button>
+                 <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackedittaskcomments(projectname, taskname, comments, hours)">Save</button>
+                 <!--data-ng-click="callbackbuttonright(); $event.stopPropagation()"-->
+             </div>
+         </div>
+     </div>
+ </form>
 </div>

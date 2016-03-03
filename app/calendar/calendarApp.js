@@ -14,7 +14,6 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 	
 	$scope.renderView = function(view) {
 		$scope.toggle = true;
-		$scope.hasError('a');
 		$scope.currentViewName = view.name;
 		$scope.currentviewmodal = view.name;
 		
@@ -624,53 +623,58 @@ myApp.directive('modal', function () {
 			};
 
 			$scope.projectTypes=['TenPercent','ClientProjects','Internal']
-
-			//TODO: delete	
-			$scope.change = function(){
-				var project = $scope.projectlist.filter(function(proj){
-					return proj.Name === $scope.projectname.Name;
-				});		
-				return $scope.projectType = project[0].Type;
-			}
+			$scope.submitted = false;
+			$scope.addEditEntryForm;
 
 			$scope.callbackedittaskcomments = function(projectname, taskname, comments, hours){
-				var data={};
-				data.projectname = projectname;
-				data.taskname = taskname;
-				data.comments = comments;
-				data.hours = hours;
-				$scope.$emit('addCommentsTaskInDayView', data);
+				$scope.submited = true;
+				if($scope.addEditEntryForm.$valid) {
+					var data={};
+					data.projectname = projectname;
+					data.taskname = taskname;
+					data.comments = comments;
+					data.hours = hours;
+					$scope.$emit('addCommentsTaskInDayView', data);
+					$scope.submitted = true;
+				}
 			}
 
 			$scope.callbackbuttonright = function(projectname, taskname, comments, hours){
-				var data={};
-				data.projectname = projectname;
-				data.taskname = taskname;
-				data.comments = comments;
-				data.hours = hours;
-				$scope.$emit('addTaskInDayView', data);
+				$scope.submited = true;
+				if($scope.addEditEntryForm.$valid) {
+					var data={};
+					data.projectname = projectname;
+					data.taskname = taskname;
+					data.comments = comments;
+					data.hours = hours;
+					$scope.$emit('addTaskInDayView', data);
+					$scope.submitted = false;
+				}
 			}
 
 			$scope.callbackbuttonrightweek = function(projectname, taskname, comments, hours){
-				var data={};
-				data.projectname = projectname;								
-				data.taskname = taskname;
-				data.comments = comments;
-								//validate duplicate Project-Task
-				var existingProjectTaskCombination = $scope.weekeventslist.filter(function(item)
-				{
-					return item.Project === projectname.Name && 
-					item.Task === taskname;
-				});
-				if(projectTaskCombinationExists(projectname.Name, taskname))
-				{
-					$scope.$emit('addTaskInWeekView', data);	
-				}
-				else
-				{
+				$scope.submitted = true;
+				if($scope.addEditEntryForm.$valid) {
+					var data={};
+					data.projectname = projectname;								
+					data.taskname = taskname;
+					data.comments = comments;
+
+					if(projectTaskCombinationExists(projectname.Name, taskname))
+					{
+						$scope.$emit('addTaskInWeekView', data);
+						$scope.submitted = false;	
+					}
+					else
+					{
 					//show validation errror
+					}
 				}
-								
+			}
+
+			$scope.closeModal = function(){
+				resetModel();
+				$scope.submitted = false;
 			}
 			
 			//check for duplicate Project-Task
@@ -682,8 +686,13 @@ myApp.directive('modal', function () {
 
 				return existingProjectTaskCombination.length == 0;
 			}
+
+			function resetModel(){
+				$scope.projectname = null;
+				$scope.taskname = '';
+				$scope.comments = '';
+			}
 		},
 	};
-				
 });
 
