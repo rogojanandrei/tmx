@@ -43,7 +43,7 @@
 
     <div class="row vertical-align" >
       <div class="col-md-3"></div>
-       <div class="col-md-6 borderless" ng-class="{'hideCalendarBody': currentViewName == 'allProjectsInWeekView',  'isSelectedDate':  toggle, 'rowHeight': currentViewName != 'allProjectsInWeekView'}" ui-calendar="uiConfig.calendar" ng-model='calendarDate' calendar="calendar" ng-click="toggle = false"  >    </div>
+       <div class="col-md-6 borderless" ng-class="{'hideCalendarBody': currentViewName == 'allProjectsInWeekView',  'isSelectedDate':  toggle, 'rowHeight': currentViewName != 'allProjectsInWeekView'}" ui-calendar="uiConfig.calendar" ng-model='calendarDate' calendar="calendar" ng-click="toggleClick()"  >    </div>
       <div class="col-md-1"></div>
       <div class="col-md-1"></div>    
     </div>

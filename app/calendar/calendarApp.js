@@ -200,6 +200,17 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 		}
 	}
 
+	//make project / task readonly only for edit task
+	$scope.newEntryClick = function()
+	{
+
+		$scope.iseditevent = false;
+	}
+
+
+	$scope.toggleClick = function(){
+		$scope.toggle = false; 
+	}
 	$scope.editComments = function($index){
 		//get task and data
 		var a = $scope.eachDayEvents[$scope.clickedDate.day()].events[$index];
@@ -255,7 +266,7 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
         		
         		//UpdateDayEvents()
         		var projectname = $scope.weekEvents.events[rowIndex].Project;
-        		var taskName = $scope.weekEvents.events[rowIndex].Task;
+        		var taskname = $scope.weekEvents.events[rowIndex].Task;
         		var projectNameId = $scope.weekEvents.events[rowIndex].ProjectNameId;
         		var dayInWeekEvent = $scope.eachDayEvents[dayInWeek].events.filter(function(item)
         		{
@@ -363,27 +374,57 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
    
 	//handle comments in day view //TODO: change to edit all events properties in day
  	$scope.$on('addCommentsTaskInDayView', function(e, data) {
- 		
- 		/*var newProjectEntry = {Project: data.projectname.Name, 
- 			ProjectNameId: data.projectName.NameId,
- 			Task: data.taskname, 
- 			Hours:0,
- 			Comments: data.comments, 
- 			Days: [0,0,0,0,0,0,0],
- 			start: moment( $scope.clickedDate ).format('YYYY-MM-DD'),
- 		};*/
+ 		/*title:8,
+					id:0,
+					events:[
+					{
+						Project: 'SheepDog',
+						ProjectNameId: 'SD',
+						Task: 'Development',
+						Hours: 4,
+						backgroundColor: '#f26522',
+						Comments: 'This task is about programming',
+					},
+					{
+						Project: 'SheepDog',
+						ProjectNameId: 'SD',
+						Task: 'QA',
+						Hours: 4,
+						Comments: 'This task is about testing',
+					}],
+				},
+
+				{
+ 		*/
 
  		var task = $scope.eachDayEvents[$scope.clickedDate.day()].events.filter(function(item)
  		{
- 				return item.Project === data.Project && item.Task === data.Task;
+ 				return item.Project === data.projectname.Name && item.Task === data.taskname;
  		});
 
  		if(task.length > 0)
  		{	
- 		    task[0].Comments = data.Comments;
+ 		    task[0].Comments = data.comments;
+ 		    task[0].Hours = data.hours;
  		}
 
- 		//$scope.weekEvents.events.push(newProjectEntry);
+ 		//update totals in day view
+ 		var dayEvent = $scope.eachDayEvents[$scope.clickedDate.day()];
+ 		dayEvent.title = 0;
+ 		for(var i=0;i<dayEvent.events.length;i++)
+ 		{
+ 				dayEvent.title+= dayEvent.events[i].Hours;
+ 			}
+	    $scope.totalHoursPerDay = dayEvent.title;
+	    //update calendar
+	    $scope.calendarDate[0].events[$scope.theDayInWeek].title = dayEvent.title;
+
+ 		//update hours in week view
+
+ 			//find edited proj and day in weeklist and modif hours 
+
+
+ 		
  	});
 
     //handle add new task in day view
@@ -649,7 +690,7 @@ myApp.directive('modal', function () {
 			
 			//check for duplicate Project-Task
 			function projectTaskCombinationExists(projectName, taskName){
-				var existingProjectTaskCombination = $scope.weekEventsList.filter(function(item)
+				var existingProjectTaskCombination = $scope.weekeventslist.filter(function(item)
 				{
 					return item.Project === projectName && item.Task === taskName;
 				});
