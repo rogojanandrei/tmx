@@ -29,6 +29,10 @@ body {
     display: none;
 } 
 
+/*.isSelectedDateColor  .fc-content-skeleton tr:first-child td:first-child a:first-child div:first-child {
+     background: #E91E63;
+}*/
+
 .isSelectedDate .fc-bg tr:first-child td:first-child {
    background: #E91E63;
    /*opacity:.3;*/

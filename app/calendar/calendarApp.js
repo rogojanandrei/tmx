@@ -337,18 +337,21 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 					header: {
 						center: 'prev,next today',
 						left: 'title, allProjectsInWeekView',
-						right: 'basicWeek' 
+						right: 'allProjectsInDayView' //'basicWeek' 
 					},
 
 					views: {
-						name:'customWeekView',
-						allProjectsInWeekView: {
-							type: 'basicWeek',
-							buttonText: 'Week'
-						}
+						name:'customWeekView',		allProjectsInWeekView: {
+															type: 'basicWeek',
+															buttonText: 'Week'
+														},
+						name:'customDayView',		allProjectsInDayView: {
+															type: 'basicWeek',
+															buttonText: 'Day'
+														}								
 					},
 
-					defaultView: 'basicWeek',
+					defaultView: 'allProjectsInDayView',
 					selectable: true,
 					editable: true,
 					eventLimit: true,
@@ -362,6 +365,7 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 			background: 'red',
 			editable : false,
 			aspectRatio: 2,
+
 		},
 	};
 	
@@ -392,7 +396,7 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
  		for(var i=0;i<dayEvent.events.length;i++)
  		{
  				dayEvent.title+= dayEvent.events[i].Hours;
- 			}
+ 		}
 
 	    $scope.totalHoursPerDay = dayEvent.title;
 	    
@@ -408,6 +412,12 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 				});
 		project[0].Days[$scope.clickedDate.day()] = task[0].Hours;
 		project[0].Comments = task[0].Comments;
+
+		//recalculate Totals per Task
+		project[0].Hours = TotalHoursInWeek(project[0].Days);
+
+		//calculate totals 
+		RecalculateTotals();
 		 		
  	});
 
@@ -537,6 +547,7 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 
     	if (allDay && $scope.currentViewName  != 'allProjectsInWeekView') {
 
+    			
     		SaveClickedDate(date);
     		$scope.theDayInWeek  =  date.day();
     		$scope.totalHoursPerDay = $scope.eachDayEvents[$scope.theDayInWeek].title;
