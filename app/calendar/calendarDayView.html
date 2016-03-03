@@ -1,55 +1,49 @@
 
          
          <!-- DAY VIEW-->
-         <div  class="panel panel-default">
-           <div class="table overflow-x-scroll">
-              <table ng-if="eachDayEvents[theDayInWeek].events.length != 0" class="table table-condensed table-bordered" st-table="eachDayEvents[theDayInWeek].events">
+         <div  class="">
+           <div class="overflow-x-scroll">
+              <table ng-if="eachDayEvents[theDayInWeek].events.length != 0" class="table fluid" st-table="eachDayEvents[theDayInWeek].events">
                     <tbody>
-                        <tr ng-repeat="event in eachDayEvents[theDayInWeek].events">
-                            <td>
-                             
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <div class="row"><b>[{{event.ProjectNameId}}] {{event.Project}}</b>  </div>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="row">{{event.Task}} - {{event.Comments}}
-
-                                          <div>
-                                            <!--    <modal lolo="modal5" modal-body="body" modal-footer="footer" modal-header="header" 
-                                              modal-headerdate = "headerdate" 
-                                              modal-projectList = "projectList" 
-                                              modal-projectGroups = "projectGroups" 
-                                              modal-taskList = "taskList"
-                                              modal-taskName= 'taskName'
-                                              modal-projectName= 'projectName' 
-                                              modal-comments='comments'
-                                              modal-hours='hours'
-                                              modal-isEditEvent='isEditEvent'
-                                              data-ng-click-right-button="saveTaskEntry()"></modal> -->
-                                              <a href="#{{modal1}}" role="button" class="btn btn-success pull-right" ng-click="editComments($index)" data-toggle="modal"><i class="fa fa-edit"></i></a> 
-                                          </div>
-                                  </div>
-
-                                </div>
-                              </div>
-
-                            </td>
-                            <td>{{event.Hours}}</td>
+                        <tr>
+                          <th>Project name</th>
+                          <th>Task name</th>
+                          <th>Comments</th>
+                          <th>Hours</th>
+                          <th></th>
                         </tr>
-                        <tr ng-if="totalHoursPerDay != 0">
-                          <td>Total: </td>
-                          <td>{{totalHoursPerDay}}</td>
+                        <tr ng-repeat="event in eachDayEvents[theDayInWeek].events">
+                          <td class="tableColumn">[{{event.ProjectNameId}}] {{event.Project}}</td>
+                          <td class="tableColumn">{{event.Task}}</td>
+                          <td class="tableColumn">{{event.Comments}}</td>
+                          <td class="tableColumn">{{event.Hours}}</td>
+                          <td>
+                            <div>
+                              <!--    <modal lolo="modal5" modal-body="body" modal-footer="footer" modal-header="header" 
+                                modal-headerdate = "headerdate" 
+                                modal-projectList = "projectList" 
+                                modal-projectGroups = "projectGroups" 
+                                modal-taskList = "taskList"
+                                modal-taskName= 'taskName'
+                                modal-projectName= 'projectName' 
+                                modal-comments='comments'
+                                modal-hours='hours'
+                                modal-isEditEvent='isEditEvent'
+                                data-ng-click-right-button="saveTaskEntry()"></modal> -->
+                                <a href="#{{modal1}}" role="button" class="link pull-right" ng-click="editComments($index)" data-toggle="modal">EDIT</a> 
+                            </div>
+                          </td>
+                        </tr>
+                        <tr ng-if="totalHoursPerDay != 0" class="total">
+                          <td class="tableColumn">Total hours:</td>
+                          <td class="tableColumn"></td>
+                          <td class="tableColumn"></td>
+                          <td class="tableColumn">{{totalHoursPerDay}}</td>
                         </tr>
                     </tbody>
               </table>
            </div>
 			  </div>
-
-  	     	 
-  	    <div class="btn-toolbar pull-right" >
-  	     	 		<div class="btn btn-sm btn-primary">Save</div>
-  	    </div>
 
         <!-- dialog directive -->
         <div class="btn-toolbar pull-left" >
@@ -64,5 +58,9 @@
                 modal-hours='hours'
                 modal-iseditevent="iseditevent"
                 data-ng-click-right-button="saveTaskEntry()"></modal>
-                <a href="#{{modal1}}" role="button" class="btn btn-success" data-toggle="modal"><i class="fa fa-plus"><small>  New entry</small></i></a>
+                <a href="#{{modal1}}" role="button" class="btn" data-toggle="modal"><i class="fa fa-plus"></i> New entry</a>
+        </div>
+
+        <div class="btn-toolbar pull-left" >
+          <div class="btn">Save</div>
         </div>

@@ -25,14 +25,13 @@ body {
     float: none;
 }
 
-.hideCalendarBody  tbody{
-       display: none;
-    
+.hideCalendarBody  tbody {
+    display: none;
 } 
 
 .isSelectedDate .fc-bg tr:first-child td:first-child {
-   background: #bce8f1;
-   opacity:.3;
+   background: #E91E63;
+   /*opacity:.3;*/
 }
 
 .removeSelection .fc-bg tr:first-child td:first-child {
@@ -41,4 +40,80 @@ body {
 
 .rowHeight .fc-agenda-slots td div {
      height: 40px !important;
+}
+
+.fc-content {
+    background: #fff;
+    padding: 6px;
+    text-align: center;
+    border: 1px solid #ccc;
+    color: rgb(38, 92, 168);
+}
+
+.fc-highlight {
+    background: #E91E63;
+    opacity: 1;
+}
+
+.fc-unthemed .fc-today {
+    background: #eee;
+}
+
+tr.total .tableColumn {
+    font-weight: 700;
+}
+
+.time-widget .btn {
+    border-radius: 0;
+    font-size: 13px;
+}
+
+.time-widget h2 {
+    color: rgba(0,0,0,.67);
+    font-family: Roboto,sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+    margin: 0 0 16px;
+    padding: 0px;
+}
+
+.time-widget .fc-button {
+    background: transparent;
+    border-radius: 2px;
+    border: none;
+    box-shadow: none;
+    color: #3F51B5;
+    display: inline-block;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 500;
+    height: auto;
+    line-height: 16px;
+    margin: 3px 0;
+    padding: 6px 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s, background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s, transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+    white-space: nowrap;
+}
+
+.time-widget .fc-button:hover,
+.time-widget .fc-button:focus {
+    background: rgba(158,158,158,.17);
+    color: #2a6496;
+    text-decoration: none;
+}
+
+.time-widget .fc-left button {
+    margin-left: 25px;
+}
+
+.time-widget .fc-content-skeleton .fc-event-container:first-child .fc-content,
+.time-widget .fc-content-skeleton .fc-event-container:last-child .fc-content {
+    background: #eee;
+    color: rgb(38, 92, 168);
+}
+
+.time-widget .fc-content-skeleton .fc-event-container .fc-day-grid-event {
+    padding: 0;
 }
