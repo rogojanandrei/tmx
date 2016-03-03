@@ -606,7 +606,7 @@ myApp.directive('modal', function () {
 		templateUrl: 'app/calendar/partialModal.html',
 		transclude: true,
 
-		controller: function ($scope, $http) {
+		controller: function ($scope) {
 			$scope.handler = 'pop'; 
 			$scope.projectlist = [
 				{NameId: 'SD', Name:'SheepDog', Type:'ClientProjects'}, 
@@ -663,7 +663,8 @@ myApp.directive('modal', function () {
 					if(projectTaskCombinationExists(projectname.Name, taskname))
 					{
 						$scope.$emit('addTaskInWeekView', data);
-						$scope.submitted = false;	
+						$scope.submitted = false;
+						$scope.closeModal();
 					}
 					else
 					{
@@ -672,9 +673,24 @@ myApp.directive('modal', function () {
 				}
 			}
 
-			$scope.closeModal = function(){
-				resetModel();
+			$scope.hasError = function hasError(field, form, submitted, validation){
+				var s = $scope.events;
+				if(form){
+					if(!form[field])
+						return false;
+					if(validation){
+						var validationError = form[field].$error[validation];
+						return submitted && validationError;
+					}
+					return submitted && form[field].$invalid;
+				}
+			}	
+
+			//TODO: make it work
+			$scope.closeModal = function(result){
 				$scope.submitted = false;
+				$uibModalInstance.close(result);
+				//Modal.close(result);
 			}
 			
 			//check for duplicate Project-Task
@@ -686,8 +702,8 @@ myApp.directive('modal', function () {
 
 				return existingProjectTaskCombination.length == 0;
 			}
-
-			function resetModel(){
+ 
+			function resetModel(){ 
 				$scope.projectname = null;
 				$scope.taskname = '';
 				$scope.comments = '';
