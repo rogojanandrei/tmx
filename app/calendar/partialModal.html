@@ -12,20 +12,25 @@
 
                 <div class="modal-body">
                     <p class="text-warning"> {{body}}</p>
-                    <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist track by project.NameId" ng-disabled="iseditevent" required>
-                        <option value=""></option>
-                    </select>
+                    <div class="required" ng-class="{'has-error': hasError('project',addEditEntryForm, submitted)}">
+                        <select name="project" class="form-control" ng-model="projectname" ng-options="project as project.Name for project in projectlist track by project.NameId" ng-disabled="iseditevent" required>
+                            <option value=""></option>
+                        </select>
+                        <label ng-if="hasError('project', addEditEntryForm, submitted, 'required')" class="control-label">This field is required</label>
+                    </div>
                     <br/>
-                    <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectname.Type]" ng-disabled="iseditevent" required>
-                        <option value=""></option>
-                    </select>
-
+                    <div class="required" ng-class="{'has-error': hasError('task', addEditEntryForm, submitted)}">
+                        <select name="task" class="form-control" ng-model="taskname" ng-options="task for task in taskList[projectname.Type]" ng-disabled="iseditevent" required>
+                            <option value=""></option>
+                        </select>
+                        <label ng-if="hasError('task', addEditEntryForm, submitted, 'required')" class="control-label">This field is required</label>
+                    </div>
                     <br/>
                     <div class="form-group">
-                        <div class="required" ng-class="{'has-error': hasError('notes', addEditEntryForm, submited)}">
+                        <div class="required" ng-class="{'has-error': hasError('notes', addEditEntryForm, submitted)}">
                             <div class="col-md-8">
                                 <textarea type="text" class="form-control input-lg" ng-model="comments" name="notes" placeholder="Notes" required />
-                                <label ng-if="hasError('notes', addEditEntryForm, submited, 'required')" class="control-label">This field is required</label>
+                                <label ng-if="hasError('notes', addEditEntryForm, submitted, 'required')" class="control-label">This field is required</label>
                             </div>
                         </div>
 
@@ -41,7 +46,7 @@
                  <!-- <p class="text-left">{{footer}}</p>-->
                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                  <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && !iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackbuttonright(projectname, taskname, comments, hours)">Save</button>
-                 <button data-dismiss="modal" ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectname, taskname, comments, hours)">Save</button>
+                 <button  ng-if="currentviewmodal === 'allProjectsInWeekView'" type="button" class="btn btn-primary" data-ng-click="callbackbuttonrightweek(projectname, taskname, comments, hours)">Save</button>
                  <button data-dismiss="modal" ng-if="currentviewmodal !== 'allProjectsInWeekView' && iseditevent" type="button" class="btn btn-primary" data-ng-click="callbackedittaskcomments(projectname, taskname, comments, hours)">Save</button>
                  <!--data-ng-click="callbackbuttonright(); $event.stopPropagation()"-->
              </div>
