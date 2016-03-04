@@ -34,7 +34,7 @@ body {
 }*/
 
 .isSelectedDate .fc-bg tr:first-child td:first-child {
-   background: #E91E63;
+   /*background: #E91E63;*/
    /*opacity:.3;*/
 }
 
@@ -47,11 +47,11 @@ body {
 }
 
 .fc-content {
-    background: #fff;
     padding: 6px;
     text-align: center;
     border: 1px solid #ccc;
     color: rgb(38, 92, 168);
+    background: #fff;
 }
 
 .fc-highlight {
@@ -60,7 +60,7 @@ body {
 }
 
 .fc-unthemed .fc-today {
-    background: #eee;
+    background: none;
 }
 
 tr.total .tableColumn {
@@ -92,7 +92,7 @@ tr.total .tableColumn {
     font-size: 13px;
     font-weight: 500;
     height: auto;
-    line-height: 16px;
+    line-height: 11px;
     margin: 3px 0;
     padding: 6px 8px;
     text-decoration: none;
@@ -109,7 +109,8 @@ tr.total .tableColumn {
 }
 
 .time-widget .fc-left button {
-    margin-left: 25px;
+    float: right;
+    margin-right: 3px;
 }
 
 .time-widget .fc-content-skeleton .fc-event-container:first-child .fc-content,
@@ -153,6 +154,26 @@ tr.total .tableColumn {
     color: rgba(255,255,255,.67);
 }
 
+.fc-widget-header th {
+    padding: 6px 0 !important;
+}
+
+.time-widget .fc-body {
+    background: #3F51B5;
+}
+
 .time-widget .fc-body .fc-row {
     min-height: 34px;
+}
+
+.time-widget .fc-event {
+    background: transparent;
+}
+
+.time-widget .fc-toolbar .fc-left {
+    min-width: 380px;
+}
+
+.time-widget .fc-toolbar .fc-right {
+    float: left;
 }
