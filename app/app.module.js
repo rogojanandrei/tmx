@@ -1,9 +1,4 @@
 (function () {
     'use strict';
-    angular.module('app', [
-        //'app.core',
-       // 'app.calendar',
-       'app.dialog',
-    ]);
+    window.app = angular.module('app', ['ui.calendar','ui.bootstrap', 'angularMoment', 'ngDialog']);
 })();
-//# sourceMappingURL=app.module.js.map

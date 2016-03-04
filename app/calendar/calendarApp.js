@@ -1,9 +1,8 @@
 
 
-var myApp = angular.module('app', ['ui.calendar','ui.bootstrap', 'angularMoment']);
+//var myApp = angular.module('app', ['ui.calendar','ui.bootstrap', 'angularMoment']);
 
-myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig){
-		//$scope.isEditEvent = false;
+window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig){
 	$scope.eachDayEvents = [];
 	$scope.totalHoursPerDay = 0;
 	$scope.startDate = null;
@@ -493,7 +492,11 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
  			}
  			return submitted && form[field].$invalid;
  		}
- 	}	
+ 	};
+
+ 	$scope.openDialog = function(){
+ 		
+ 	}
 
    	//private functions
    	function getProjectByName(projectName){
@@ -589,13 +592,13 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 
 	} );
 
-myApp.directive('modal', function () {
+window.app.directive('modal', function () {
 	return {
 		restrict: 'EA',
 		scope: {
-			projectlist: '=projectlist',
+			projectlist: '=?projectlist',
 			projectGroups: '=projectGroups',
-			taskList: '=taskList',
+			taskList: '=?taskList',
 			title: '=modalTitle',
 			header: '=modalHeader',
 			headerdate: '=modalHeaderdate',
