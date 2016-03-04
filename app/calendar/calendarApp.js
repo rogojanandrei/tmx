@@ -18,12 +18,11 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 		$scope.currentviewmodal = view.name;
 		
 		uiCalendarConfig.calendars[0];
-		EventsTitleToHours();
+		
 		if($scope.eachDayEvents.length > 0)
 		{
 			getTasksPerDay(view.start, true);
 		}
-		
 	    
 		//make server call only if week changes
 		if(!moment($scope.startDate).isSame(view.start) && !moment($scope.endDate).isSame(view.End))
@@ -179,7 +178,9 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 					}		],
 				}];
 		
+
 		   InitCalendar($scope.weekEvents.start);
+		   EventsTitleToHours();
 		   $scope.theDayInWeek = view.start.day();
 		   $scope.totalHoursPerDay = $scope.eachDayEvents[$scope.theDayInWeek].title;
 		   $scope.weekeventslist = $scope.weekEvents.events;
@@ -202,7 +203,6 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 	//make project / task readonly only for edit task
 	$scope.newEntryClick = function()
 	{
-
 		$scope.iseditevent = false;
 	}
 
@@ -322,7 +322,7 @@ myApp.controller('MainCtrl', function($scope, $filter, moment, uiCalendarConfig)
 		if (allDay && $scope.currentViewName != 'allProjectsInWeekView') {
 
     			 	//TODO : click on data too and display panel
-
+    			 	$scope.is
     			 	SaveClickedDate(event.start);
 
     			 	$scope.theDayInWeek  =  event.start.day();
