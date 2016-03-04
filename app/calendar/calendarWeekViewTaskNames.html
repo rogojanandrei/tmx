@@ -1,21 +1,20 @@
 <div ng-if="weekEvents.events.length != 0">         
-         <div class=" panel panel-default borderless">
-             <div class="table overflow-x-scroll ">
-              <table  class="table table-condensed " st-table="weekEvents.events"><!--table-bordered-->
+         <div class="">
+             <div class="">
+              <table  class="table fluid" st-table="weekEvents.events"><!--table-bordered-->
                     <tbody>
 
                         <tr ng-repeat="event in weekEvents.events">
-                            <td>
-                              <div class="form-control ">
+                            <td class="tableColumn">
+                              <div>
                                 <b>[{{event.ProjectNameId}}] {{event.Project}}</b>  ({{event.Task}}) 
-                               
                               </div>  
                             </td>
                            {{event}} 
                         </tr>
                         <tr>
                           <td><div class="text-center">
-                                  <a href="#{{modal1}}" data-keyboard = "true" role="button" ng-click = "newEntryClick()" class="btn btn-success pull-left" data-toggle="modal"><i class="fa fa-plus"></i><small>  New line</small></a>
+                                  <a href="#{{modal1}}" data-keyboard = "true" role="button" ng-click = "newEntryClick()" class="btn pull-left" data-toggle="modal"><i class="fa fa-plus"></i> New line</a>
                               </div>
                           </td>
 

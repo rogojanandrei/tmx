@@ -1,24 +1,24 @@
 <div ng-if="weekEvents.events.length != 0">         
-         <div class=" panel panel-default borderless"><!--borderless-->
-             <div class="table overflow-x-scroll ">
-              <table  class="table table-condensed " st-table="weekEvents.events">
+         <div class=""><!--borderless-->
+             <div class="">
+              <table  class="table fluid" st-table="weekEvents.events">
                     <tbody>
 
                         <tr ng-repeat="event in weekEvents.events">
                             
-                            <td><div class="form-control"><b>{{event.Hours}}</b></div></td>
-                            <td><a href="#" role="button" class="btn btn-success" ng-click="deleteRow($index)" data-toggle="modal"><i class="fa fa-times"></i></a></td>
+                            <td class="text-center"><b>{{event.Hours}}</b></td>
+                            <td><a href="#" title="delete" role="button" ng-click="deleteRow($index)" class="delete" data-toggle="modal"><i class="fa fa-times"></i></a></td>
 
                         </tr>
                         <tr>
-                          <td><div class="text-warning"><b>Totals: {{totalHoursPerWeek}}</b></div></td>
+                          <td class="text-center-"><b>Totals: {{totalHoursPerWeek}}</b></td>
                         </tr>
-                            </tbody>
-                            </table>
-                            </div>
-                            </div>
-                            </div>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>
+                    </div>
 
-                            <div class="btn-toolbar pull-right" >
-              <div class="btn btn-sm btn-primary">Save</div>
+        <div class="btn-toolbar pull-right" >
+          <div class="btn">Save</div>
         </div>

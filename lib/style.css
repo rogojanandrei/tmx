@@ -121,3 +121,38 @@ tr.total .tableColumn {
 .time-widget .fc-content-skeleton .fc-event-container .fc-day-grid-event {
     padding: 0;
 }
+
+.time-widget .full-week td {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.time-widget .full-week input[type="number"] {
+    width: 50px;
+    border: none;
+    border-bottom: 2px solid #3f51b5;
+    padding: 0;
+    padding-bottom: 5px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.75);
+}
+
+.time-widget a.delete .fa-times {
+    color: #E91E63;
+}
+
+.time-widget a.delete {
+    padding: 3px;
+}
+
+.fc-widget-header {
+    background: #3F51B5;
+    color: rgba(255,255,255,.67);
+}
+
+.time-widget .fc-body .fc-row {
+    min-height: 34px;
+}
