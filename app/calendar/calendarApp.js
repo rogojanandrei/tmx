@@ -50,8 +50,8 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 			{
 				totals:[8,8,0,0,0,0,8],
 						
-						start: '2016-02-28',
-						end: '2016-03-05',
+						start: '2016-03-06',
+						end: '2016-03-12',
 						events:[
 						{
 							Project: 'SheepDog',
@@ -208,7 +208,25 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 
 	$scope.toggleClick = function(){
 		$scope.toggle = false; 
+		var innerE = document.getElementsByClassName("fc-content");
+		var outerE = document.getElementsByClassName("fc-bg");
+		var out = angular.element(outerE).children().children().children().children();
+				
+		angular.element(innerE[$scope.theDayInWeek]).css('background','#E91E63');
+		angular.element(out[$scope.theDayInWeek]).css('background','#E91E63');
+
+		for(var i = 0;i < $scope.theDayInWeek;i++)
+		{
+			angular.element(innerE[i]).css('background','#fff');
+			angular.element(out[i]).css('background','#fff');
+		}
+		for(var i = $scope.theDayInWeek+1;i<7;i++)
+		{
+			angular.element(innerE[i]).css('background','#fff');
+			angular.element(out[i]).css('background','#fff');
+		}
 	}
+
 	$scope.editComments = function($index){
 		//get task and data
 		var a = $scope.eachDayEvents[$scope.clickedDate.day()].events[$index];
@@ -321,12 +339,13 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 		if (allDay && $scope.currentViewName != 'allProjectsInWeekView') {
 
     			 	//TODO : click on data too and display panel
-    			 	$scope.is
+    			 	
     			 	SaveClickedDate(event.start);
 
     			 	$scope.theDayInWeek  =  event.start.day();
 					//calculate subTotals per day
 					$scope.totalHoursPerDay = $scope.eachDayEvents[$scope.theDayInWeek].title;
+					$scope.toggleClick();
 				}
 			};
 
@@ -549,11 +568,10 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
     function getTasksPerDay(date, allDay, jsEvent, view){
 
     	if (allDay && $scope.currentViewName  != 'allProjectsInWeekView') {
-
-    			
     		SaveClickedDate(date);
     		$scope.theDayInWeek  =  date.day();
     		$scope.totalHoursPerDay = $scope.eachDayEvents[$scope.theDayInWeek].title;
+    		$scope.toggleClick();	
     	}
     };
 
