@@ -49,13 +49,13 @@ body {
 .fc-content {
     padding: 6px;
     text-align: center;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     color: rgb(38, 92, 168);
     background: #fff;
 }
 
 .fc-highlight {
-    background: #E91E63;
+    background: red;
     opacity: 1;
 }
 
@@ -115,8 +115,8 @@ tr.total .tableColumn {
 
 .time-widget .fc-content-skeleton .fc-event-container:first-child .fc-content,
 .time-widget .fc-content-skeleton .fc-event-container:last-child .fc-content {
-    background: #eee;
-    color: rgb(38, 92, 168);
+    background: #eee !important;
+    color: rgb(38, 92, 168) !important;
 }
 
 .time-widget .fc-content-skeleton .fc-event-container .fc-day-grid-event {
@@ -159,11 +159,11 @@ tr.total .tableColumn {
 }
 
 .time-widget .fc-body {
-    background: #3F51B5;
+    /*background: #ccc;*/
 }
 
 .time-widget .fc-body .fc-row {
-    min-height: 34px;
+    min-height: 26px;
 }
 
 .time-widget .fc-event {
@@ -176,4 +176,38 @@ tr.total .tableColumn {
 
 .time-widget .fc-toolbar .fc-right {
     float: left;
+}
+
+.time-widget .fc-row .fc-content-skeleton tbody td {
+    border-right: 1px solid #ccc;
+    padding: 0;
+}
+
+.time-widget .fc-day-grid-event {
+    margin: 0;
+}
+
+.time-widget .fc-widget-content {
+    padding: 0;
+    border: 1px solid #ccc;
+    border-top: 0;
+}
+
+.time-widget .fc-content.active {
+    background: #E91E63 !important;
+    color: #fff;
+}
+
+.time-widget .fc-content-skeleton .fc-event-container:first-child .fc-content.active, 
+.time-widget .fc-content-skeleton .fc-event-container:last-child .fc-content.active {
+    background: #E91E63 !important;
+    color: #fff !important;
+}
+
+.m-t-0 {
+    margin-top: 0 !important;
+}
+
+.time-widget .fc-view-container {
+    margin-bottom: 16px;
 }

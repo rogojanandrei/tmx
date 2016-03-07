@@ -212,18 +212,18 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 		var outerE = document.getElementsByClassName("fc-bg");
 		var out = angular.element(outerE).children().children().children().children();
 				
-		angular.element(innerE[$scope.theDayInWeek]).css('background','#E91E63');
-		angular.element(out[$scope.theDayInWeek]).css('background','#E91E63');
+		angular.element(innerE[$scope.theDayInWeek]).css('background','#E91E63').addClass("active");
+		angular.element(out[$scope.theDayInWeek]).css('background','#E91E63').addClass("active");
 
 		for(var i = 0;i < $scope.theDayInWeek;i++)
 		{
-			angular.element(innerE[i]).css('background','#fff');
-			angular.element(out[i]).css('background','#fff');
+			angular.element(innerE[i]).css('background','transparent').removeClass("active");
+			angular.element(out[i]).css('background','transparent').removeClass("active");
 		}
 		for(var i = $scope.theDayInWeek+1;i<7;i++)
 		{
-			angular.element(innerE[i]).css('background','#fff');
-			angular.element(out[i]).css('background','#fff');
+			angular.element(innerE[i]).css('background','transparent').removeClass("active");
+			angular.element(out[i]).css('background','transparent').removeClass("active");
 		}
 	}
 
