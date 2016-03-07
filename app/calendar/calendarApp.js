@@ -17,12 +17,7 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 		$scope.currentviewmodal = view.name;
 		
 		uiCalendarConfig.calendars[0];
-		
-		if($scope.eachDayEvents.length > 0)
-		{
-			getTasksPerDay(view.start, true);
-		}
-	    
+				    
 		//make server call only if week changes
 		if(!moment($scope.startDate).isSame(view.start) && !moment($scope.endDate).isSame(view.End))
 		{
@@ -180,7 +175,11 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 
 		   InitCalendar($scope.weekEvents.start);
 		   EventsTitleToHours();
-		   $scope.theDayInWeek = view.start.day();
+		   //current day Selected when view is rendered
+		   if($scope.eachDayEvents.length > 0)
+			{
+				getTasksPerDay(moment(),true);
+			}
 		   $scope.totalHoursPerDay = $scope.eachDayEvents[$scope.theDayInWeek].title;
 		   $scope.weekeventslist = $scope.weekEvents.events;
 		}
@@ -236,9 +235,6 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 
 		$scope.comments = a.Comments;
 		$scope.hours = a.Hours;
-
-
-		//$scope.
 	}
 
 	$scope.deleteRow = function(rowIndex){
@@ -383,7 +379,6 @@ window.app.controller('MainCtrl', function($scope, $filter, moment, uiCalendarCo
 			background: 'red',
 			editable : false,
 			aspectRatio: 2,
-
 		},
 	};
 	
