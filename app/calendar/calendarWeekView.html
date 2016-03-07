@@ -1,12 +1,17 @@
 <!-- WEEK VIEW -->
-<div ng-if="weekEvents.events.length != 0">
+<div ><!--ng-if="weekEvents.events.length != 0"-->
    <div class="">
      <div class="">
       <table  class="table fluid full-week" st-table="weekEvents.events">
         <tbody>
 
           <tr ng-repeat="event in weekEvents.events">
-                            
+                             <td class="tableColumn">
+                              <div>
+                                <b>[{{event.ProjectNameId}}] {{event.Project}}</b>  ({{event.Task}}) 
+                              </div>  
+                            </td>
+
                             <td ng-class="{'has-error': hasError('Sun_'+$index,weekViewForm,true)}">
                               <input type="number" name="{{'Sun_'+$index}}" ng-model="event.Days[0]" min="0" ng-change="sumHours($index,0,event.Days[0])"></input>
                             </td>
@@ -29,23 +34,58 @@
                               <input type="number" name="{{'Sat_'+$index}}" ng-model="event.Days[6]" ng-change="sumHours($index,6,event.Days[6])" min="0"></input>
                             </td>       
 
-                          </tr>
+                            <td class="text-center"><b>{{event.Hours}}</b></td>
+                            <td><a href="#" title="delete" role="button" ng-click="deleteRow($index)" class="delete" data-toggle="modal"><i class="fa fa-times"></i></a></td>
+                            {{event}}
+  
 
-                          <tr>
-                        
+               </tr>
+
+               <tr>
+                            <td><div class="text-center">
+                                  <a href="#{{modal1}}" data-keyboard = "true" role="button" ng-click = "newEntryClick()" class="btn pull-left" data-toggle="modal"><i class="fa fa-plus"></i> New line</a>
+                              </div>
+                            </td>
+
                             <td><b>{{weekEvents.totals[0]}}</b></td>
                             <td><b>{{weekEvents.totals[1]}}</b></td>
                             <td><b>{{weekEvents.totals[2]}}</b></td>
                             <td><b>{{weekEvents.totals[3]}}</b></td>
                             <td><b>{{weekEvents.totals[4]}}</b></td>
                             <td><b>{{weekEvents.totals[5]}}</b></td>
-                          <td><b>{{weekEvents.totals[6]}}</b></td>
-                         
-                        </tr>
+                            <td><b>{{weekEvents.totals[6]}}</b></td>
+                            <td class="text-center-"><b>Totals: {{totalHoursPerWeek}}</b></td>
+                </tr>
 
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              
+                      
+              </tbody>
+             </table>
+           </div>
+          </div>
+
+
+        
+                  <!-- dialog directive -->
+        <div class="btn-toolbar pull-left" >
+                <modal lolo="modal1" modal-body="body" modal-footer="footer" modal-header="header" modal-currentviewmodal='currentviewmodal'
+                modal-headerdate = "headerdate" 
+                modal-projectList = "projectList" 
+                modal-projectGroups = "projectGroups" 
+                modal-taskList = "taskList"
+                modal-taskname= 'taskname'
+                modal-projectname= 'projectname' 
+                modal-comments='comments'
+                modal-hours='hours'
+                modal-weekeventslist='weekeventslist'
+                modal-iseditevent="iseditevent"
+                data-ng-save-task-week-view="saveTaskEntry()"
+                ></modal>
+          </div>
     </div>        
+
+
+  
+
+    <div class="btn-toolbar pull-right" >
+          <div class="btn">Save</div>
+   </div>
