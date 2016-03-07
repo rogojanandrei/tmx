@@ -141,6 +141,19 @@ tr.total .tableColumn {
     color: rgba(0,0,0,0.75);
 }
 
+.time-widget .full-week .hours {
+    width: 62px;
+}
+
+.time-widget .full-week td:first-child {
+    width: 280px;
+    text-align: left;
+}
+
+.time-widget .full-week td.total {
+    width: 90px;
+}
+
 .time-widget a.delete .fa-times {
     color: #E91E63;
 }
